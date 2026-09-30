@@ -62,5 +62,14 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Probe gateway release output
+        run: |
+          if test -x apps/gateway/target/release/onecli-gateway; then
+            echo 'release_binary_present=true'
+            sha256sum apps/gateway/target/release/onecli-gateway
+          else
+            echo 'release_binary_present=false'
+          fi
+
       - name: Test
         run: pnpm test
